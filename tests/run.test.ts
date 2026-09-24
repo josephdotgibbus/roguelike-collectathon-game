@@ -63,7 +63,11 @@ describe("level generation", () => {
   it("grows the gift hunt and withholds mines and ice until their levels", () => {
     const early = generateLevel(1, "normal", mulberry32(4));
     const later = generateLevel(12, "normal", mulberry32(4));
-    expect(early.giftCount).toBeGreaterThan(0);
+    expect(early.tiles.length).toBeGreaterThan(3);
+    expect(early.giftCount).toBeGreaterThanOrEqual(8);
+    for (let seed = 1; seed <= 8; seed += 1) {
+      expect(generateLevel(2, "normal", mulberry32(seed)).giftCount).toBeGreaterThanOrEqual(8);
+    }
     expect(early.giftCount).toBeLessThanOrEqual(giftBudget(1));
     expect(later.tiles.length).toBeGreaterThan(early.tiles.length);
     expect(later.giftCount).toBeGreaterThan(early.giftCount);

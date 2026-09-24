@@ -59,8 +59,8 @@ export function giftBudget(level: number): number {
   return Math.round(8 + level * 3.5);
 }
 
-function overlaps(a: Tile, x: number, z: number, w: number, d: number, pad = 0.4): boolean {
-  return Math.abs(a.x - x) < (a.w + w) / 2 + pad && Math.abs(a.z - z) < (a.d + d) / 2 + pad;
+function overlaps(a: Tile, x: number, z: number, w: number, d: number): boolean {
+  return Math.abs(a.x - x) < (a.w + w) / 2 - 0.05 && Math.abs(a.z - z) < (a.d + d) / 2 - 0.05;
 }
 
 function giftSpots(tile: Tile, budget: number, rng: () => number): { x: number; z: number }[] {
@@ -93,18 +93,18 @@ export function generateLevel(level: number, difficulty: Difficulty, rng: () => 
   };
   const tiles: Tile[] = [beacon];
   const budget = giftBudget(level);
-  let giftsLeft = budget;
+  const tileGoal = Math.min(36, 4 + level * 2);
   const minesAt = tripmineLevel(difficulty);
   const iceAt = iceLevel(difficulty);
   const seaAt = seamineLevel(difficulty);
   let guard = 0;
 
-  while (giftsLeft > 0 && tiles.length < 42 && guard < 400) {
+  while (tiles.length < tileGoal && guard < 500) {
     guard += 1;
     const parent = tiles[Math.floor(rng() * tiles.length)];
     if (parent.kind === "highrise") continue;
     const dir = DIRS[Math.floor(rng() * DIRS.length)];
-    const highrise = level >= 18 && rng() < 0.16 && giftsLeft >= 4;
+    const highrise = level >= 18 && rng() < 0.16;
     const w = highrise ? 7 + rng() * 2 : 4.6 + rng() * 3.4;
     const d = highrise ? 7 + rng() * 2 : 4.6 + rng() * 3.4;
     const connected = level <= 2 || rng() < Math.max(0.22, 0.84 - level * 0.035);
@@ -128,8 +128,6 @@ export function generateLevel(level: number, difficulty: Difficulty, rng: () => 
       fallRank: 0,
     };
     tiles.push(tile);
-    const room = Math.min(giftsLeft, highrise ? 3 : 1 + Math.floor(rng() * 4));
-    giftsLeft -= Math.min(room, giftSpots(tile, room, rng).length);
   }
 
   const ranked = tiles
