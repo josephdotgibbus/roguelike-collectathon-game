@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { generateLevel, tileSolid, type GeneratedLevel, type Pickup, type Tile } from "./generate";
+import { BEACON_WIN_RADIUS, generateLevel, inBeaconRing, tileSolid, type GeneratedLevel, type Pickup, type Tile } from "./generate";
 import type { Solid } from "./physics";
 
 const box = new THREE.BoxGeometry(1, 1, 1);
@@ -26,6 +26,8 @@ export class World {
   private readonly adversaries: THREE.Object3D[] = [];
   private readonly stars: THREE.Points;
   private readonly tileMap: THREE.CanvasTexture;
+  private readonly tileMaterials = new Map<number, THREE.Material[]>();
+  private beaconRing: THREE.Mesh | null = null;
 
   constructor(scene: THREE.Scene) {
     this.scene = scene;
@@ -39,11 +41,12 @@ export class World {
     this.clearLevel();
     this.level = level;
     for (const tile of level.tiles) {
-      const mesh = new THREE.Mesh(box, materialsFor(colorFor(tile.kind), this.tileMap));
+      const mesh = new THREE.Mesh(box, this.materialsFor(colorFor(tile.kind)));
       mesh.scale.set(tile.w, tile.h, tile.d);
       mesh.position.set(tile.x, tile.top - tile.h / 2, tile.z);
       this.scene.add(mesh);
       this.tiles.push({ tile, mesh, alive: true });
+      if (tile.kind === "beacon") this.addBeaconRing(tile);
     }
     for (const pickup of level.pickups) {
       const mesh = makePickup(pickup.kind);
@@ -161,8 +164,7 @@ export class World {
   onBeacon(x: number, z: number): boolean {
     const beacon = this.tiles.find((live) => live.tile.kind === "beacon");
     if (!beacon) return false;
-    const tile = beacon.tile;
-    return Math.abs(x - tile.x) <= tile.w / 2 - 0.3 && Math.abs(z - tile.z) <= tile.d / 2 - 0.3;
+    return inBeaconRing(x - beacon.tile.x, z - beacon.tile.z);
   }
 
   update(time: number, camera?: THREE.Camera): void {
@@ -184,6 +186,21 @@ export class World {
     }
   }
 
+  private addBeaconRing(tile: Tile): void {
+    const ring = new THREE.Mesh(beaconRingGeometry, beaconRingMaterial);
+    ring.position.set(tile.x, tile.top + 0.04, tile.z);
+    this.scene.add(ring);
+    this.beaconRing = ring;
+  }
+
+  private materialsFor(color: number): THREE.Material[] {
+    const cached = this.tileMaterials.get(color);
+    if (cached) return cached;
+    const materials = materialsFor(color, this.tileMap);
+    this.tileMaterials.set(color, materials);
+    return materials;
+  }
+
   private rebuildSolids(): void {
     this.solids = this.tiles.filter((live) => live.alive).map((live) => tileSolid(live.tile));
   }
@@ -193,6 +210,8 @@ export class World {
     for (const live of this.pickups) this.scene.remove(live.mesh);
     for (const gift of this.gold) this.scene.remove(gift.mesh);
     for (const marker of this.adversaries) this.scene.remove(marker);
+    if (this.beaconRing) this.scene.remove(this.beaconRing);
+    this.beaconRing = null;
     this.tiles.length = 0;
     this.pickups.length = 0;
     this.gold.length = 0;
@@ -208,6 +227,18 @@ function mulberry(seed: number): () => number {
     return (state >>> 8) / 16777216;
   };
 }
+
+const beaconRingGeometry = new THREE.RingGeometry(BEACON_WIN_RADIUS - 0.18, BEACON_WIN_RADIUS, 28);
+beaconRingGeometry.rotateX(-Math.PI / 2);
+const beaconRingMaterial = new THREE.MeshBasicMaterial({
+  color: 0xfff1c2,
+  transparent: true,
+  opacity: 0.9,
+  depthWrite: false,
+  fog: false,
+});
+
+const pickupTemplates = new Map<string, THREE.Group>();
 
 function colorFor(kind: Tile["kind"]): number {
   if (kind === "beacon") return 0xf0c14a;
@@ -232,6 +263,14 @@ function materialsFor(color: number, tileMap: THREE.CanvasTexture): THREE.Materi
 }
 
 function makePickup(kind: "gift" | "gold" | "tripmine" | "seamine"): THREE.Group {
+  const existing = pickupTemplates.get(kind);
+  if (existing) return existing.clone();
+  const group = buildPickup(kind);
+  pickupTemplates.set(kind, group);
+  return group.clone();
+}
+
+function buildPickup(kind: "gift" | "gold" | "tripmine" | "seamine"): THREE.Group {
   const group = new THREE.Group();
   if (kind === "seamine") {
     const ball = new THREE.Mesh(
@@ -267,11 +306,6 @@ function makePickup(kind: "gift" | "gold" | "tripmine" | "seamine"): THREE.Group
     new THREE.MeshStandardMaterial({ color: ribbon, emissive: ribbon, emissiveIntensity: 0.35 }),
   );
   group.add(body, wrap, bow);
-  if (kind === "gift" || kind === "gold") {
-    const light = new THREE.PointLight(kind === "gift" ? 0xb44dff : 0xf0c14a, 1.4, 4.5, 2);
-    light.position.y = 0.4;
-    group.add(light);
-  }
   return group;
 }
 
