@@ -1,19 +1,14 @@
 # roguelike-collectathon-game
 
-A small browser-based **roguelike collectathon**: explore a procedurally generated
-dungeon, collect every gem on the floor, then find the stairs down. Fight (or dodge)
-enemies, survive as deep as you can, and rack up the highest score.
+A browser-based top-down 3D platform in a dark void, built with Vite, TypeScript, and Three.js. The player is a 2D sprite standing in the 3D space, with a soft shadow that sits on whatever surface is underneath them.
 
-Built with **Vite + TypeScript** and rendered on an HTML5 canvas. Game logic is
-pure and unit-tested with **Vitest**.
+This is the movement foundation: floating platforms, walking, and jumping. Collectibles, enemies, and the roguelike loop are not in yet.
 
-## Gameplay
+## Controls
 
-- Move with `W` `A` `S` `D` or the arrow keys (turn-based: enemies move after you).
-- Walk over a gem to collect it (+10). Collect every gem to reveal the stairs (`>`).
-- Walk into an enemy to attack it. Two hits defeats it (+5).
-- Enemies chase you and hit you when adjacent. Reach the stairs to descend (+25, +2 HP).
-- Reach 0 HP and it's game over. Press `R` (or the button) for a new run.
+- `W` `A` `S` `D` or the arrow keys to move.
+- `Space` to jump. Hold it for a higher jump.
+- Fall into the void and you reappear on the center platform.
 
 ## Getting started
 
@@ -36,17 +31,18 @@ npm run dev     # start the Vite dev server on http://localhost:5173
 ## Project structure
 
 ```
-index.html            # App shell + HUD
+index.html
 src/
-  main.ts             # Input handling, HUD sync, render loop
-  style.css           # UI styling
+  main.ts             # Animation loop
+  style.css
   game/
-    rng.ts            # Deterministic seedable PRNG (mulberry32)
-    types.ts          # Shared types + tile constants
-    dungeon.ts        # Procedural dungeon generation
-    game.ts           # Game state, movement, combat, floor progression
-    render.ts         # Canvas rendering
-tests/                # Vitest unit tests for the pure game logic
+    level.ts          # Hand-placed platforms
+    physics.ts        # Movement, jumping, and collision
+    player.ts         # Sprite, shadow, and respawn
+    world.ts          # Three.js environment
+    game.ts           # Camera, lighting, and frame update
+    spriteFrames.ts   # Pixel frames for idle, run, jump, and fall
+tests/                # Movement and sprite checks
 ```
 
 ## Play it online (GitHub Pages)
@@ -64,18 +60,7 @@ is live at:
 https://josephdotgibbus.github.io/roguelike-collectathon-game/
 ```
 
-You can also trigger a deploy manually from the **Actions** tab
-(**Deploy to GitHub Pages → Run workflow**).
-
-## Add your own assets
-
-Put images/audio/fonts in the [`public/`](public/) folder — they are copied to the
-site root at build time. You can upload them straight from the GitHub web UI
-(**Add file → Upload files**) or edit files in the browser by pressing `.` on the
-repo to open github.dev. See [`public/README.md`](public/README.md) for details.
-
 ## Cloud Agent environment
 
-`.cursor/environment.json` configures the Cursor Cloud Agent environment: it runs
-`npm ci` to install dependencies and launches the Vite dev server in a `dev-server`
-terminal on port `5173`.
+`.cursor/environment.json` installs dependencies and launches the Vite dev server
+on port `5173`.

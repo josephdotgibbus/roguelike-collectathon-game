@@ -1,217 +1,107 @@
-import { Dungeon, floorTiles, generateDungeon } from "./dungeon";
-import { Rng, makeRng, randInt } from "./rng";
-import { Enemy, FLOOR, GameState, Vec } from "./types";
+import * as THREE from "three";
+import { Input } from "./input";
+import { SPAWN } from "./level";
+import { Player } from "./player";
+import { World } from "./world";
 
-export const MAP_W = 22;
-export const MAP_H = 22;
-const MAX_HP = 10;
+const CAMERA_OFFSET = new THREE.Vector3(0, 18, 14);
 
-let enemyIdCounter = 0;
+export class Game {
+  private readonly renderer: THREE.WebGLRenderer;
+  private readonly scene = new THREE.Scene();
+  private readonly camera: THREE.PerspectiveCamera;
+  private readonly input = new Input();
+  private readonly world: World;
+  private readonly player: Player;
+  private readonly glow: THREE.PointLight;
+  private readonly lookTarget = new THREE.Vector3();
+  private readonly wish = new THREE.Vector3();
+  private readonly forward = new THREE.Vector3();
+  private readonly right = new THREE.Vector3();
+  private last = 0;
+  private time = 0;
+  private snapCamera = true;
 
-function keyOf(v: Vec): string {
-  return `${v.x},${v.y}`;
-}
+  constructor(canvas: HTMLCanvasElement) {
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.05;
 
-function shuffle<T>(rng: Rng, arr: T[]): T[] {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    this.scene.background = new THREE.Color(0x100814);
+    this.scene.fog = new THREE.FogExp2(0x100814, 0.016);
+
+    this.camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 220);
+    this.scene.add(new THREE.HemisphereLight(0xc7b4ff, 0x1a1024, 0.7));
+    const key = new THREE.DirectionalLight(0xfff1dd, 1.45);
+    key.position.set(-14, 26, 12);
+    this.scene.add(key);
+    const fill = new THREE.DirectionalLight(0x7a5cff, 0.4);
+    fill.position.set(12, 8, -14);
+    this.scene.add(fill);
+    this.glow = new THREE.PointLight(0xff8ad4, 3.2, 16, 2);
+    this.scene.add(this.glow);
+
+    this.world = new World(this.scene);
+    this.player = new Player(this.scene, SPAWN);
+    this.camera.position.set(SPAWN.x, SPAWN.y + CAMERA_OFFSET.y, SPAWN.z + CAMERA_OFFSET.z);
+    this.camera.lookAt(SPAWN.x, SPAWN.y + 1.1, SPAWN.z);
+
+    window.addEventListener("resize", () => {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    });
   }
-  return arr;
-}
 
-/** Number of gems / enemies scales gently with depth. */
-function gemCountForFloor(floor: number): number {
-  return 4 + Math.min(floor, 6);
-}
+  frame(now: number): void {
+    if (this.last === 0) {
+      this.last = now;
+      this.renderer.render(this.scene, this.camera);
+      return;
+    }
+    const dt = Math.min((now - this.last) / 1000, 0.05);
+    this.last = now;
+    this.time += dt;
 
-function enemyCountForFloor(floor: number): number {
-  return 1 + Math.min(floor, 6);
-}
+    const position = this.player.position;
+    const desired = new THREE.Vector3(position.x, position.y, position.z).add(CAMERA_OFFSET);
+    if (this.snapCamera) {
+      this.camera.position.copy(desired);
+      this.snapCamera = false;
+    } else {
+      this.camera.position.lerp(desired, 1 - Math.pow(0.0008, dt));
+    }
+    this.lookTarget.set(position.x, position.y + 1.1, position.z);
+    this.camera.lookAt(this.lookTarget);
 
-/**
- * Build a fresh floor (dungeon + player spawn + gems + enemies) and merge it
- * into the provided partial state (which carries score / floor / hp forward).
- */
-export function buildFloor(
-  floor: number,
-  rng: Rng,
-  carry: { score: number; hp: number; seed: number },
-): GameState {
-  const dungeon: Dungeon = generateDungeon(MAP_W, MAP_H, rng);
-  const open = shuffle(rng, floorTiles(dungeon.grid));
+    this.camera.updateMatrixWorld();
+    this.camera.getWorldDirection(this.forward);
+    this.forward.y = 0;
+    if (this.forward.lengthSq() < 1e-6) this.forward.set(0, 0, -1);
+    this.forward.normalize();
+    this.right.crossVectors(this.forward, this.camera.up).normalize();
 
-  // Player spawns on the first open tile.
-  const playerTile = open.shift() ?? { x: 1, y: 1 };
+    const axis = this.input.axis();
+    this.wish.copy(this.right).multiplyScalar(axis.x).addScaledVector(this.forward, axis.y);
 
-  const gems: Vec[] = [];
-  const gemCount = Math.min(gemCountForFloor(floor), open.length);
-  for (let i = 0; i < gemCount; i++) {
-    gems.push(open.shift()!);
-  }
-
-  const enemies: Enemy[] = [];
-  const enemyCount = Math.min(enemyCountForFloor(floor), open.length);
-  for (let i = 0; i < enemyCount; i++) {
-    const tile = open.shift()!;
-    enemies.push({ id: enemyIdCounter++, x: tile.x, y: tile.y, hp: 2 });
-  }
-
-  return {
-    width: MAP_W,
-    height: MAP_H,
-    grid: dungeon.grid,
-    player: { x: playerTile.x, y: playerTile.y, hp: carry.hp, maxHp: MAX_HP },
-    gems,
-    enemies,
-    stairs: null,
-    floor,
-    score: carry.score,
-    status: "playing",
-    message: `Floor ${floor}: collect all ${gems.length} gems!`,
-    seed: carry.seed,
-  };
-}
-
-export function createGame(seed: number = Date.now()): GameState {
-  const rng = makeRng(seed);
-  return buildFloor(1, rng, { score: 0, hp: MAX_HP, seed });
-}
-
-function isFloor(state: GameState, x: number, y: number): boolean {
-  return (
-    y >= 0 &&
-    y < state.height &&
-    x >= 0 &&
-    x < state.width &&
-    state.grid[y][x] === FLOOR
-  );
-}
-
-function enemyAt(state: GameState, x: number, y: number): Enemy | undefined {
-  return state.enemies.find((e) => e.x === x && e.y === y);
-}
-
-/** Reveal stairs on a random remaining floor tile once all gems are gone. */
-function maybeSpawnStairs(state: GameState, rng: Rng): void {
-  if (state.gems.length === 0 && !state.stairs) {
-    const occupied = new Set<string>([
-      keyOf(state.player),
-      ...state.enemies.map(keyOf),
-    ]);
-    const candidates = floorTiles(state.grid).filter(
-      (t) => !occupied.has(keyOf(t)),
+    this.player.update(
+      dt,
+      this.world.solids,
+      this.camera,
+      this.wish.x,
+      this.wish.z,
+      this.input.consumeJump(),
+      this.input.jumpHeld,
+      axis.x,
+      SPAWN,
     );
-    if (candidates.length > 0) {
-      state.stairs = candidates[randInt(rng, 0, candidates.length - 1)];
-      state.message = "All gems collected! Reach the stairs (purple).";
-    }
+    this.world.update(this.time);
+    const feet = this.player.position;
+    this.glow.position.set(feet.x, feet.y + 1.6, feet.z);
+
+    this.renderer.render(this.scene, this.camera);
   }
-}
-
-/** Move each enemy one step toward the player (greedy, walls block). */
-function moveEnemies(state: GameState): void {
-  for (const enemy of state.enemies) {
-    const dx = Math.sign(state.player.x - enemy.x);
-    const dy = Math.sign(state.player.y - enemy.y);
-
-    // If already adjacent, attack instead of moving onto the player.
-    if (Math.abs(state.player.x - enemy.x) + Math.abs(state.player.y - enemy.y) === 1) {
-      state.player.hp -= 1;
-      continue;
-    }
-
-    const tries: Vec[] = [];
-    if (Math.abs(state.player.x - enemy.x) > Math.abs(state.player.y - enemy.y)) {
-      tries.push({ x: enemy.x + dx, y: enemy.y }, { x: enemy.x, y: enemy.y + dy });
-    } else {
-      tries.push({ x: enemy.x, y: enemy.y + dy }, { x: enemy.x + dx, y: enemy.y });
-    }
-
-    for (const t of tries) {
-      if (
-        isFloor(state, t.x, t.y) &&
-        !enemyAt(state, t.x, t.y) &&
-        !(t.x === state.player.x && t.y === state.player.y)
-      ) {
-        enemy.x = t.x;
-        enemy.y = t.y;
-        break;
-      }
-    }
-  }
-
-  if (state.player.hp <= 0) {
-    state.player.hp = 0;
-    state.status = "dead";
-    state.message = `You died on floor ${state.floor}. Final score: ${state.score}. Press R.`;
-  }
-}
-
-/**
- * Attempt to move the player by (dx, dy). Handles attacking enemies, collecting
- * gems, descending stairs, and advancing the enemy turn. Returns the updated
- * state (mutated in place and returned for convenience).
- */
-export function movePlayer(state: GameState, dx: number, dy: number): GameState {
-  if (state.status !== "playing") return state;
-  if ((dx === 0 && dy === 0) || (dx !== 0 && dy !== 0)) return state; // cardinal only
-
-  const nx = state.player.x + dx;
-  const ny = state.player.y + dy;
-
-  const target = enemyAt(state, nx, ny);
-  if (target) {
-    // Bump attack.
-    target.hp -= 1;
-    if (target.hp <= 0) {
-      state.enemies = state.enemies.filter((e) => e.id !== target.id);
-      state.score += 5;
-      state.message = "Enemy defeated! (+5)";
-    } else {
-      state.message = "You hit the enemy.";
-    }
-    moveEnemies(state);
-    return state;
-  }
-
-  if (!isFloor(state, nx, ny)) {
-    return state; // blocked by wall / edge
-  }
-
-  state.player.x = nx;
-  state.player.y = ny;
-
-  // Collect a gem if standing on one.
-  const gemIndex = state.gems.findIndex((g) => g.x === nx && g.y === ny);
-  if (gemIndex >= 0) {
-    state.gems.splice(gemIndex, 1);
-    state.score += 10;
-    state.message = `Gem collected! (+10) ${state.gems.length} left.`;
-  }
-
-  const rng = makeRng(state.seed + state.floor * 1000 + state.score);
-  maybeSpawnStairs(state, rng);
-
-  // Descend when reaching the stairs.
-  if (state.stairs && nx === state.stairs.x && ny === state.stairs.y) {
-    return descend(state);
-  }
-
-  moveEnemies(state);
-  return state;
-}
-
-/** Advance to the next floor, carrying score and hp; small hp bonus on descent. */
-export function descend(state: GameState): GameState {
-  const nextFloor = state.floor + 1;
-  const rng = makeRng(state.seed + nextFloor * 7919);
-  const healedHp = Math.min(state.player.maxHp, state.player.hp + 2);
-  const next = buildFloor(nextFloor, rng, {
-    score: state.score + 25,
-    hp: healedHp,
-    seed: state.seed,
-  });
-  next.message = `Descended to floor ${nextFloor}! (+25, +2 HP) Collect ${next.gems.length} gems.`;
-  return next;
 }

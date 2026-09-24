@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "A browser-based roguelike collectathon game built with Vite + TypeScript.",
+  "description": "A browser-based top-down 3D roguelike collectathon. The player is a 2D sprite in a 3D void.",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5173",
     "build": "tsc --noEmit && vite build",
@@ -12,7 +12,11 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
+  "dependencies": {
+    "three": "^0.186.0"
+  },
   "devDependencies": {
+    "@types/three": "^0.186.0",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vitest": "^2.1.8"
