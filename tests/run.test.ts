@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateLevel, giftBudget, iceLevel, tripmineLevel } from "../src/game/generate";
+import { generateLevel, giftBudget, iceLevel, tripmineLevel, type Tile } from "../src/game/generate";
 import {
   curseShopLevel,
   greaterCurseLevel,
@@ -30,11 +30,34 @@ describe("nullscape intermissions", () => {
     expect(upgradePrice(belt, 0, "casual")).toBe(500);
     expect(upgradePrice(belt, 0, "normal")).toBe(500);
     expect(upgradePrice(belt, 0, "extreme")).toBe(945);
+    const curses = rollOffers("curse", 2, "normal", {}, [], mulberry32(2));
+    expect(curses).toHaveLength(3);
     const offers = rollOffers("upgrade", 5, "normal", {}, [], mulberry32(2));
     expect(offers.length).toBeGreaterThan(0);
     expect(offers.every((offer) => offer.price !== null)).toBe(true);
   });
 });
+
+function walkable(tiles: Tile[]): boolean {
+  const seen = new Set<number>([0]);
+  const queue = [0];
+  while (queue.length > 0) {
+    const current = tiles[queue.pop() ?? 0];
+    for (const next of tiles) {
+      if (seen.has(next.id)) continue;
+      const dx = Math.abs(current.x - next.x);
+      const dz = Math.abs(current.z - next.z);
+      const touch =
+        (dx <= (current.w + next.w) / 2 + 0.2 && dz <= (current.d + next.d) / 2 - 0.4) ||
+        (dz <= (current.d + next.d) / 2 + 0.2 && dx <= (current.w + next.w) / 2 - 0.4);
+      if (touch && Math.abs(current.top - next.top) <= 0.5) {
+        seen.add(next.id);
+        queue.push(next.id);
+      }
+    }
+  }
+  return seen.size === tiles.length;
+}
 
 describe("level generation", () => {
   it("grows the gift hunt and withholds mines and ice until their levels", () => {
@@ -46,6 +69,7 @@ describe("level generation", () => {
     expect(later.giftCount).toBeGreaterThan(early.giftCount);
     expect(early.tiles.some((tile) => tile.kind === "ice")).toBe(false);
     expect(early.pickups.some((pickup) => pickup.kind !== "gift")).toBe(false);
+    expect(walkable(early.tiles)).toBe(true);
 
     const casual = generateLevel(20, "casual", mulberry32(9));
     expect(casual.pickups.some((pickup) => pickup.kind === "tripmine")).toBe(false);

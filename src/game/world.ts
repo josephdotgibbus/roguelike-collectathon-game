@@ -71,6 +71,34 @@ export class World {
     });
   }
 
+  nearestGift(x: number, z: number): { x: number; y: number; z: number } | null {
+    let best: { x: number; y: number; z: number } | null = null;
+    let bestDist = Infinity;
+    for (const live of this.pickups) {
+      if (!live.mesh.visible || live.pickup.kind !== "gift") continue;
+      const dist = Math.hypot(live.pickup.x - x, live.pickup.z - z);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = live.pickup;
+      }
+    }
+    return best;
+  }
+
+  nearestGold(x: number, z: number): { x: number; y: number; z: number } | null {
+    let best: { x: number; y: number; z: number } | null = null;
+    let bestDist = Infinity;
+    for (const gift of this.gold) {
+      if (gift.taken) continue;
+      const dist = Math.hypot(gift.x - x, gift.z - z);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = gift;
+      }
+    }
+    return best;
+  }
+
   pickupAt(x: number, z: number, radius: number): Pickup | null {
     for (const live of this.pickups) {
       if (!live.mesh.visible) continue;

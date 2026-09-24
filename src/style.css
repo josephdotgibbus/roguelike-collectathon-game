@@ -63,11 +63,23 @@ body.in-menu #hint {
 .hud-card {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px 14px;
   padding: 10px 12px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
   background: rgba(16, 8, 24, 0.72);
+}
+
+.gift-arrow {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #b44dff;
+  border-radius: 50%;
+  color: #f0c14a;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
 }
 
 .hud-owned {

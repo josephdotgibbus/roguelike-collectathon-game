@@ -453,6 +453,14 @@
   ],
   "curses": [
     {
+      "id": "LowerGravity",
+      "name": "Lower Gravity",
+      "blurb": "You'd think this'd be helpful.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "BladeCarousel",
       "name": "Blade Carousel",
       "blurb": "Voidbreaker's swords now spin around you.",
@@ -461,10 +469,74 @@
       "hazard": null
     },
     {
+      "id": "SoyRetro",
+      "name": "Soy Retro",
+      "blurb": "Haha! Gubby",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "BloodyBell",
+      "name": "Bloody Bell",
+      "blurb": "Ringing Bell inflicts flesh.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "TelefraggerPredict",
+      "name": "Accurate Telefragger",
+      "blurb": "Telefragger will sometimes predict your vertical movement.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "DeadlyMelody",
+      "name": "Deadly Melody",
+      "blurb": "Cadence spawns an instrument whenever a player dies.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "BigMart",
+      "name": "Bigger Marts",
+      "blurb": "Mart has an increased size cap and is bigger.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "RandomSpawn",
+      "name": "Random Spawn",
+      "blurb": "Players and enemies get randomized spawn locations.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "SavoryRing",
       "name": "Savory Ring",
       "blurb": "+0.15x Golden Gift yield, spawns random enemies during collapse.",
       "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "ScatteredGifts",
+      "name": "Scattered Gifts",
+      "blurb": "Gifts are now randomly offset when generating.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "WeakJumpPads",
+      "name": "Weaker Jump Pads",
+      "blurb": "Jump Pads and Grapple Points give less of a boost.",
+      "minLevel": 1,
       "maxStack": 1,
       "hazard": null
     },
@@ -541,6 +613,22 @@
       "hazard": null
     },
     {
+      "id": "WorseTiles",
+      "name": "Less Stairs",
+      "blurb": "A lot less stairs and something wicked happens",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Tripnuke",
+      "name": "Tripnuke",
+      "blurb": "Exploding a tripmine will kill everyone within the radius.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "TweakedOdds",
       "name": "Tweaked Odds",
       "blurb": "Altar of Chance now will always grant a positive and negative effect. Nerfs and removes certain positive effects.",
@@ -589,10 +677,42 @@
       "hazard": "tripmine"
     },
     {
+      "id": "BellTargetEnemy",
+      "name": "More Ringing",
+      "blurb": "Enemies can ring it. Decreases teleport cooldown.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "MightyGong",
+      "name": "Mighty Gong",
+      "blurb": "Bell increases in size and when it teleports, creates a shockwave that pushes nearby players away. Shockwaves apply the effects of a direct ring.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Concussion",
+      "name": "Concussion",
+      "blurb": "Ringing Bell will disable jumping for 7 seconds.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "MartSlide",
       "name": "Mart Slide",
       "blurb": "Mart no longer kills on contact. Mart builds up immense momentum, pushing unsuspecting players that get in the way.",
       "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "BabyNoIndicator",
+      "name": "Pacifier",
+      "blurb": "Silences Baby at last, at the cost of foresight.",
+      "minLevel": 1,
       "maxStack": 1,
       "hazard": null
     },
@@ -610,6 +730,38 @@
       "blurb": "Higher powered explosives.",
       "minLevel": 5,
       "maxStack": 2,
+      "hazard": null
+    },
+    {
+      "id": "ScorchedEarth",
+      "name": "Scorched Earth",
+      "blurb": "ICBM leaves behind pools of fire after exploding; if touched, it will force you to move forward for the duration of its effect.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "FasterHusk",
+      "name": "Closer Husk",
+      "blurb": "It's right behind me... isn't it?",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "SlowerHusk",
+      "name": "Further Husk",
+      "blurb": "It's right behind me... nevermind.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "TallerHusk",
+      "name": "Taller Husk",
+      "blurb": "It's looming over you. Increases in size with progression events.",
+      "minLevel": 1,
+      "maxStack": 1,
       "hazard": null
     },
     {
@@ -693,6 +845,30 @@
       "hazard": null
     },
     {
+      "id": "BurningBoquet",
+      "name": "Burning Bouquet",
+      "blurb": "Kol\u00f3na will attract Razorbloom.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "LostEmbers",
+      "name": "Lost Embers",
+      "blurb": "Kol\u00f3na will no longer show a number while counting. Pay attention.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Telestabber",
+      "name": "Ambush",
+      "blurb": "Telefragger has a chance to teleport behind you with a dash instead.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "BlueCheese",
       "name": "Cheeseware",
       "blurb": "Kookoo will activate Doombringer.",
@@ -705,6 +881,38 @@
       "name": "Idiotware",
       "blurb": "If Kookoo appears as a smiley, don't use your ability.",
       "minLevel": 10,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "NuclearBomb",
+      "name": "Nuclear Bomb",
+      "blurb": "Due to popular demand, the ICBM will now raze the entire map.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "HuskHorde",
+      "name": "Legion",
+      "blurb": "You and what... army... oh...",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "WorseTiles",
+      "name": "Worse Tiles",
+      "blurb": "Removes smaller tiles from showing up.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "IceTiles",
+      "name": "Ice Tiles",
+      "blurb": "Adds some slippery tiles.",
+      "minLevel": 1,
       "maxStack": 1,
       "hazard": null
     },
@@ -725,6 +933,22 @@
       "hazard": null
     },
     {
+      "id": "TripleICBM",
+      "name": "Missile Silo",
+      "blurb": "Triples ICBMs.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "HuskPresence",
+      "name": "Husk Presence",
+      "blurb": "Jumpscare Warning!",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "TripleHusk",
       "name": "Conga Line",
       "blurb": "Triples Husks.",
@@ -733,10 +957,122 @@
       "hazard": null
     },
     {
+      "id": "TripleSpringer",
+      "name": "Mighty Cavalry",
+      "blurb": "Triples Springers.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
       "id": "Nearsightedness",
       "name": "Nearsightedness",
       "blurb": "I can't see without my glasses!",
       "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Teledancer",
+      "name": "Teledancer",
+      "blurb": "I like to dance with it!",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "OvertunedInstruments",
+      "name": "Overtuned Instruments",
+      "blurb": "collecting instruments spawns another bell and gives you overtuned",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "HuskBlock",
+      "name": "Husk Block",
+      "blurb": "This sucks",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "NeedHusk",
+      "name": "You Need Me",
+      "blurb": "You Need Me",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "CrossLaser",
+      "name": "Blueprint: Cross Beams",
+      "blurb": "Lasers now cross.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Pixelate",
+      "name": "Pixelate",
+      "blurb": "Screen will be pixelated from now on.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "InvisibleHusk",
+      "name": "Where's Husk?",
+      "blurb": "-Visual Clutter",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "AggressivePonderer",
+      "name": "Pursuit",
+      "blurb": "Ponderer kills now even if you have a shield. Moves slowly towards players.",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Fear",
+      "name": "fear",
+      "blurb": "a horrible visage. dont let it touch you",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "OnlyIceTiles",
+      "name": "only ice tiles",
+      "blurb": "i need this for the trailer soerry lol",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "onlyHighrise",
+      "name": "only highrise tiles",
+      "blurb": "for marcie",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Unknown",
+      "name": "Windows GUI",
+      "blurb": "How do i zoom???",
+      "minLevel": 1,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "AccurateBell",
+      "name": "Accurate Bell",
+      "blurb": "Bell will teleport much closer to player",
+      "minLevel": 1,
       "maxStack": 1,
       "hazard": null
     }

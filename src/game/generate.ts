@@ -107,12 +107,13 @@ export function generateLevel(level: number, difficulty: Difficulty, rng: () => 
     const highrise = level >= 18 && rng() < 0.16 && giftsLeft >= 4;
     const w = highrise ? 7 + rng() * 2 : 4.6 + rng() * 3.4;
     const d = highrise ? 7 + rng() * 2 : 4.6 + rng() * 3.4;
-    const connected = rng() < Math.max(0.25, 0.72 - level * 0.03);
-    const gap = connected ? 0 : 1.5 + rng() * (1.1 + Math.min(level, 16) * 0.05);
+    const connected = level <= 2 || rng() < Math.max(0.22, 0.84 - level * 0.035);
+    const gap = connected ? 0 : 1.35 + rng() * (0.8 + Math.min(level, 16) * 0.05);
     const x = parent.x + dir.x * ((parent.w + w) / 2 + gap);
     const z = parent.z + dir.z * ((parent.d + d) / 2 + gap);
     if (tiles.some((tile) => overlaps(tile, x, z, w, d))) continue;
-    const rise = (rng() - 0.35) * Math.min(0.35 + level * 0.06, 1.6);
+    const riseCap = level <= 2 ? 0.4 : Math.min(0.35 + level * 0.06, 1.6);
+    const rise = (rng() - 0.35) * riseCap;
     const top = Math.max(-1.2, parent.top + (highrise ? 1.25 + rng() * 0.45 : rise));
     const ice = !highrise && level >= iceAt && rng() < 0.28;
     const tile: Tile = {

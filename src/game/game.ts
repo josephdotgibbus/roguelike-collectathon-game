@@ -183,7 +183,7 @@ export class Game {
     );
 
     const feet = this.player.position;
-    const pickup = this.world.pickupAt(feet.x, feet.z, 1.15);
+    const pickup = this.world.pickupAt(feet.x, feet.z, 1.45);
     if (pickup && Math.abs(feet.y - pickup.y) < 2.2) {
       if (pickup.kind === "gift") {
         this.world.takePickup(pickup.id);
@@ -209,6 +209,17 @@ export class Game {
       }
     }
     this.renderHud(run);
+  }
+
+  private guideTarget(): { x: number; z: number; label: string } | null {
+    const feet = this.player.position;
+    if (!this.collapse) {
+      const gift = this.world.nearestGift(feet.x, feet.z);
+      return gift ? { x: gift.x, z: gift.z, label: "gift" } : null;
+    }
+    const gold = this.world.nearestGold(feet.x, feet.z);
+    if (gold) return { x: gold.x, z: gold.z, label: "gold" };
+    return { x: 0, z: 0, label: "beacon" };
   }
 
   private beginCollapse(run: Run): void {
@@ -442,11 +453,24 @@ export class Game {
   private renderHud(run: Run): void {
     const phase = this.collapse ? "Collapse — return to the beacon" : `Gifts ${this.giftsLeft}`;
     const owned = summarize(run);
+    const guide = this.guideTarget();
+    let arrow = "";
+    if (guide && this.right.lengthSq() > 0.5) {
+      const feet = this.player.position;
+      const dx = guide.x - feet.x;
+      const dz = guide.z - feet.z;
+      const localX = dx * this.right.x + dz * this.right.z;
+      const localY = dx * this.forward.x + dz * this.forward.z;
+      const angle = Math.atan2(localX, localY);
+      const meters = Math.hypot(dx, dz).toFixed(0);
+      arrow = `<div class="gift-arrow" style="transform:rotate(${angle}rad)">↑</div><span>${meters}m to ${guide.label}</span>`;
+    }
     this.hud.innerHTML = `
       <div class="hud-card">
         <strong>Level ${run.level}</strong>
         <span>${run.difficulty}</span>
         <span>${phase}</span>
+        ${arrow}
         <span>${run.gold} golden gifts</span>
       </div>
       <p class="hud-owned">${owned}</p>`;
