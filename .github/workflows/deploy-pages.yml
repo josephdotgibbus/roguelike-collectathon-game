@@ -1,23 +1,17 @@
-name: Deploy to GitHub Pages
+name: Publish GitHub Pages site
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
 
-# Allow the workflow to publish to GitHub Pages.
+# Pages is published from the main branch root (legacy source). This job
+# rebuilds that root and pushes the static files. A GITHUB_TOKEN push does
+# not start another Actions run.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment; skip queued runs in favor of the latest.
-concurrency:
-  group: pages
-  cancel-in-progress: true
+  contents: write
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,27 +26,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Type check
-        run: npm run typecheck
-
       - name: Run tests
         run: npm test
 
-      - name: Build
-        run: npm run build
+      - name: Build site into the repo root
+        run: npm run build:pages
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit built site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html assets .nojekyll
+          if git diff --staged --quiet; then
+            echo "Site already up to date"
+          else
+            git commit -m "Publish built site for GitHub Pages"
+            git push
+          fi

@@ -51,21 +51,17 @@ tests/                # Vitest unit tests for the pure game logic
 
 ## Play it online (GitHub Pages)
 
-This repo auto-deploys to GitHub Pages on every push to `main` via
-`.github/workflows/deploy-pages.yml` (it type-checks, tests, builds, and publishes
-`dist/`). The build uses a relative base path, so it works from the project
-subpath GitHub Pages serves.
+Play the game at:
 
-One-time setup: in the repo, go to **Settings → Pages → Build and deployment →
-Source** and choose **GitHub Actions**. After the next push to `main`, the game
-is live at:
-
-```
 https://josephdotgibbus.github.io/roguelike-collectathon-game/
-```
 
-You can also trigger a deploy manually from the **Actions** tab
-(**Deploy to GitHub Pages → Run workflow**).
+Pages is set to publish the `main` branch root. The root `index.html` and
+`assets/` folder are the production build (relative paths, plus `.nojekyll`).
+Local development still uses `dev.html` and the TypeScript sources via
+`npm run dev`.
+
+On every push to `main`, `.github/workflows/deploy-pages.yml` tests, rebuilds,
+and commits that static root if it changed.
 
 ## Add your own assets
 
