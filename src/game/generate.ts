@@ -1,0 +1,175 @@
+import type { Difficulty } from "./shops";
+import type { Solid } from "./physics";
+
+export type TileKind = "beacon" | "normal" | "ice" | "highrise";
+
+export type Tile = {
+  id: number;
+  x: number;
+  z: number;
+  w: number;
+  d: number;
+  top: number;
+  h: number;
+  kind: TileKind;
+  /** Higher falls sooner. The beacon never falls. */
+  fallRank: number;
+};
+
+export type PickupKind = "gift" | "tripmine" | "seamine";
+
+export type Pickup = {
+  id: number;
+  tileId: number;
+  x: number;
+  y: number;
+  z: number;
+  kind: PickupKind;
+};
+
+export type GeneratedLevel = {
+  level: number;
+  tiles: Tile[];
+  pickups: Pickup[];
+  spawn: { x: number; y: number; z: number };
+  giftCount: number;
+};
+
+const DIRS = [
+  { x: 0, z: -1 },
+  { x: 1, z: 0 },
+  { x: 0, z: 1 },
+  { x: -1, z: 0 },
+];
+
+export function iceLevel(difficulty: Difficulty): number {
+  return difficulty === "extreme" ? 5 : 8;
+}
+
+export function tripmineLevel(difficulty: Difficulty): number | null {
+  if (difficulty === "casual") return null;
+  return difficulty === "extreme" ? 3 : 5;
+}
+
+export function seamineLevel(difficulty: Difficulty): number {
+  return difficulty === "casual" ? 15 : 10;
+}
+
+export function giftBudget(level: number): number {
+  return Math.round(8 + level * 3.5);
+}
+
+function overlaps(a: Tile, x: number, z: number, w: number, d: number, pad = 0.4): boolean {
+  return Math.abs(a.x - x) < (a.w + w) / 2 + pad && Math.abs(a.z - z) < (a.d + d) / 2 + pad;
+}
+
+function giftSpots(tile: Tile, budget: number, rng: () => number): { x: number; z: number }[] {
+  const spots: { x: number; z: number }[] = [];
+  const step = 1.85;
+  for (let z = -tile.d / 2 + 1.15; z <= tile.d / 2 - 1.05 && spots.length < budget; z += step) {
+    for (let x = -tile.w / 2 + 1.15; x <= tile.w / 2 - 1.05 && spots.length < budget; x += step) {
+      spots.push({
+        x: tile.x + x + (rng() - 0.5) * 0.25,
+        z: tile.z + z + (rng() - 0.5) * 0.25,
+      });
+    }
+  }
+  if (spots.length === 0 && budget > 0) spots.push({ x: tile.x, z: tile.z });
+  return spots;
+}
+
+/** Branching platforms whose gift count, ice, towers, and mines follow the level. */
+export function generateLevel(level: number, difficulty: Difficulty, rng: () => number): GeneratedLevel {
+  const beacon: Tile = {
+    id: 0,
+    x: 0,
+    z: 0,
+    w: 11,
+    d: 11,
+    top: 0,
+    h: 0.9,
+    kind: "beacon",
+    fallRank: 0,
+  };
+  const tiles: Tile[] = [beacon];
+  const budget = giftBudget(level);
+  let giftsLeft = budget;
+  const minesAt = tripmineLevel(difficulty);
+  const iceAt = iceLevel(difficulty);
+  const seaAt = seamineLevel(difficulty);
+  let guard = 0;
+
+  while (giftsLeft > 0 && tiles.length < 42 && guard < 400) {
+    guard += 1;
+    const parent = tiles[Math.floor(rng() * tiles.length)];
+    if (parent.kind === "highrise") continue;
+    const dir = DIRS[Math.floor(rng() * DIRS.length)];
+    const highrise = level >= 18 && rng() < 0.16 && giftsLeft >= 4;
+    const w = highrise ? 7 + rng() * 2 : 4.6 + rng() * 3.4;
+    const d = highrise ? 7 + rng() * 2 : 4.6 + rng() * 3.4;
+    const connected = rng() < Math.max(0.25, 0.72 - level * 0.03);
+    const gap = connected ? 0 : 1.5 + rng() * (1.1 + Math.min(level, 16) * 0.05);
+    const x = parent.x + dir.x * ((parent.w + w) / 2 + gap);
+    const z = parent.z + dir.z * ((parent.d + d) / 2 + gap);
+    if (tiles.some((tile) => overlaps(tile, x, z, w, d))) continue;
+    const rise = (rng() - 0.35) * Math.min(0.35 + level * 0.06, 1.6);
+    const top = Math.max(-1.2, parent.top + (highrise ? 1.25 + rng() * 0.45 : rise));
+    const ice = !highrise && level >= iceAt && rng() < 0.28;
+    const tile: Tile = {
+      id: tiles.length,
+      x,
+      z,
+      w,
+      d,
+      top,
+      h: highrise ? top + 0.8 : 0.75,
+      kind: highrise ? "highrise" : ice ? "ice" : "normal",
+      fallRank: 0,
+    };
+    tiles.push(tile);
+    const room = Math.min(giftsLeft, highrise ? 3 : 1 + Math.floor(rng() * 4));
+    giftsLeft -= Math.min(room, giftSpots(tile, room, rng).length);
+  }
+
+  const ranked = tiles
+    .filter((tile) => tile.kind !== "beacon")
+    .sort((a, b) => Math.hypot(b.x, b.z) - Math.hypot(a.x, a.z));
+  ranked.forEach((tile, index) => {
+    tile.fallRank = index + 1;
+  });
+
+  const pickups: Pickup[] = [];
+  let giftCount = 0;
+  const push = (tile: Tile, x: number, z: number, kind: PickupKind) => {
+    pickups.push({ id: pickups.length, tileId: tile.id, x, y: tile.top, z, kind });
+    if (kind === "gift") giftCount += 1;
+  };
+
+  for (const tile of tiles) {
+    const cap = tile.kind === "beacon" ? Math.min(3, Math.max(1, Math.ceil(budget / 12))) : 6;
+    const spots = giftSpots(tile, cap, rng);
+    for (const spot of spots) {
+      if (giftCount >= budget) break;
+      const mine = minesAt !== null && level >= minesAt && rng() < 0.14;
+      push(tile, spot.x, spot.z, mine ? "tripmine" : "gift");
+    }
+    if (level >= seaAt && tile.kind !== "beacon" && rng() < 0.35) {
+      const edge = DIRS[Math.floor(rng() * DIRS.length)];
+      push(tile, tile.x + edge.x * (tile.w * 0.32), tile.z + edge.z * (tile.d * 0.32), "seamine");
+    }
+  }
+
+  return { level, tiles, pickups, spawn: { x: 0, y: 0, z: 0 }, giftCount };
+}
+
+export function tileSolid(tile: Tile): Solid {
+  return {
+    minX: tile.x - tile.w / 2,
+    maxX: tile.x + tile.w / 2,
+    minZ: tile.z - tile.d / 2,
+    maxZ: tile.z + tile.d / 2,
+    top: tile.top,
+    bottom: tile.top - tile.h,
+    ice: tile.kind === "ice",
+  };
+}

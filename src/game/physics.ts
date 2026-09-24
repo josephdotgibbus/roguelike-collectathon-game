@@ -5,6 +5,8 @@ export type Solid = {
   maxZ: number;
   top: number;
   bottom: number;
+  /** Ice tiles keep momentum and take longer to steer. */
+  ice?: boolean;
 };
 
 export type Body = {
@@ -163,6 +165,15 @@ function resolveVertical(body: Body, solids: Solid[], prevY: number): boolean {
   return true;
 }
 
+function iceUnder(body: Body, solids: Solid[]): boolean {
+  for (const solid of solids) {
+    if (!solid.ice) continue;
+    if (body.x < solid.minX || body.x > solid.maxX || body.z < solid.minZ || body.z > solid.maxZ) continue;
+    if (Math.abs(body.y - solid.top) < 0.2) return true;
+  }
+  return false;
+}
+
 export function tick(loc: Locomotion, solids: Solid[], input: TickInput): void {
   const { body } = loc;
   const dt = input.dt;
@@ -172,7 +183,7 @@ export function tick(loc: Locomotion, solids: Solid[], input: TickInput): void {
   const targetX = nx * BODY.speed;
   const targetZ = nz * BODY.speed;
 
-  const accel = (body.grounded ? BODY.accel : BODY.airAccel) * dt;
+  const accel = (body.grounded ? BODY.accel : BODY.airAccel) * dt * (body.grounded && iceUnder(body, solids) ? 0.2 : 1);
   const dvx = targetX - body.vx;
   const dvz = targetZ - body.vz;
   const dl = Math.hypot(dvx, dvz);

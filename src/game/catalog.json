@@ -1,0 +1,1046 @@
+{
+  "upgrades": [
+    {
+      "id": "BusinessLicense",
+      "name": "Business License",
+      "blurb": "+0.25x Golden Gift yield. (Max 0.5x)",
+      "minLevel": 3,
+      "maxStack": 2,
+      "prices": {
+        "normal": 75,
+        "stacks": [
+          75,
+          188
+        ]
+      },
+      "hazard": null
+    },
+    {
+      "id": "DefuseKit",
+      "name": "Defuse Kit",
+      "blurb": "+20% Chance for Tripmines to not explode. (Max 60%)",
+      "minLevel": 5,
+      "maxStack": 3,
+      "prices": {
+        "normal": 30
+      },
+      "hazard": "tripmine"
+    },
+    {
+      "id": "Paycheck",
+      "name": "Paycheck",
+      "blurb": "Gain +40 (+10 per beaconed player) Golden Gifts every round if half or more of the players survive.",
+      "minLevel": 3,
+      "maxStack": 5,
+      "prices": {
+        "normal": 55
+      },
+      "hazard": null
+    },
+    {
+      "id": "SwiftnessRing",
+      "name": "Swiftness Ring",
+      "blurb": "+10% Movement speed (Max 30%).",
+      "minLevel": 3,
+      "maxStack": 3,
+      "prices": {
+        "normal": 80
+      },
+      "hazard": null
+    },
+    {
+      "id": "EnemyOnTop",
+      "name": "Radar Module: Enemies",
+      "blurb": "Tracks enemies through walls.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 200
+      },
+      "hazard": null
+    },
+    {
+      "id": "RadarPlayer",
+      "name": "Radar Module: Players",
+      "blurb": "Highlights other players every 12 seconds.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 150
+      },
+      "hazard": null
+    },
+    {
+      "id": "RadarAltars",
+      "name": "Radar Module: Altars",
+      "blurb": "Marks the location of all unused altars every 12 seconds.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 300
+      },
+      "hazard": null
+    },
+    {
+      "id": "FannyPack",
+      "name": "Fanny Pack",
+      "blurb": "On collapse, some tiles turn yellow. Collecting all gifts from these tiles gives bonus Golden Gifts. Golden Gift payout increases with tile size and multipliers.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 300
+      },
+      "hazard": null
+    },
+    {
+      "id": "HighlightGifts",
+      "name": "Radar",
+      "blurb": "Arrow always appears and highlights all nearby gifts.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 175
+      },
+      "hazard": null
+    },
+    {
+      "id": "BetterJumppad",
+      "name": "Better Jump Pads",
+      "blurb": "More Jump Pads with less random positions.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 50
+      },
+      "hazard": null
+    },
+    {
+      "id": "DoubleJump",
+      "name": "Double Jump",
+      "blurb": "Allows you to double jump.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 150
+      },
+      "hazard": null
+    },
+    {
+      "id": "TriaOrbs",
+      "name": "Tria Orbs",
+      "blurb": "Makes Orbs appear around the map, Orbs boost you after jumping out of them.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 100
+      },
+      "hazard": null
+    },
+    {
+      "id": "Medal",
+      "name": "Medal",
+      "blurb": "On Collapse and on odd levels, the Medal spawns, bring it to the beacon for Golden Gifts and the option to pick a difficult curse for Golden Gifts. Choosing to pick a difficult curse increases future Golden Gifts rewards. Carrying it gives an extra double jump but disables abilities.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 100
+      },
+      "hazard": null
+    },
+    {
+      "id": "GraceWings",
+      "name": "Grace Wings",
+      "blurb": "Greatly enhances air control.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 300,
+        "solo": 200
+      },
+      "hazard": null
+    },
+    {
+      "id": "GrapplePoints",
+      "name": "Grapple Points",
+      "blurb": "Harder to reach Jump Pads that are smaller, with a more powerful boost.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 100
+      },
+      "hazard": null
+    },
+    {
+      "id": "LargerGrapplePoints",
+      "name": "Larger Grapple Points",
+      "blurb": "Grapple Points are 25% larger.",
+      "minLevel": 13,
+      "maxStack": 1,
+      "prices": {
+        "normal": 500
+      },
+      "hazard": null
+    },
+    {
+      "id": "PocketBell",
+      "name": "Pocket Bell",
+      "blurb": "An extra double jump.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "prices": {
+        "normal": 300
+      },
+      "hazard": null
+    },
+    {
+      "id": "HighlightTripmine",
+      "name": "Radar Module: Tripmines",
+      "blurb": "Highlights all nearby Tripmines.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 400
+      },
+      "hazard": "tripmine"
+    },
+    {
+      "id": "AdvancedGravityCoil",
+      "name": "Advanced Gravity Coil",
+      "blurb": "25% Increased maximum jump height. Controllable jump height. Hold space to jump higher, tap space to jump lightly.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 600
+      },
+      "hazard": null
+    },
+    {
+      "id": "IceSkates",
+      "name": "Ice Skates",
+      "blurb": "Less slipping on ice. Going in one direction for a while slowly gives a speed boost.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 400,
+        "solo": 300
+      },
+      "hazard": null
+    },
+    {
+      "id": "Helmet",
+      "name": "Helmet",
+      "blurb": "Bonking sends you upwards and allows slight movement.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 400
+      },
+      "hazard": null
+    },
+    {
+      "id": "MoreAltars",
+      "name": "More Altars",
+      "blurb": "Spawns an extra Altar.",
+      "minLevel": 10,
+      "maxStack": 1,
+      "prices": {
+        "normal": 600
+      },
+      "hazard": null
+    },
+    {
+      "id": "SubspacialBarrier",
+      "name": "Subspacial Barrier",
+      "blurb": "Allows you take an extra hit from Tripmines and Void Implosions.",
+      "minLevel": 10,
+      "maxStack": 2,
+      "prices": {
+        "normal": 1000,
+        "stacks": [
+          1000,
+          3000
+        ]
+      },
+      "hazard": null
+    },
+    {
+      "id": "NinjaBelt",
+      "name": "Ninja Belt",
+      "blurb": "Press [ALT-ABILITY] for a powered dive.",
+      "minLevel": 13,
+      "maxStack": 1,
+      "prices": {
+        "normal": 700,
+        "casual": 500,
+        "solo": 500
+      },
+      "hazard": null
+    },
+    {
+      "id": "SharkTail",
+      "name": "Shark Tail",
+      "blurb": "Pressing [ABILITY] or [ALT-ABILITY] mid-dive converts horizontal speed into vertical.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "prices": {
+        "normal": 1200,
+        "casual": 800
+      },
+      "hazard": null
+    },
+    {
+      "id": "GiftMagnet",
+      "name": "Gift Magnet",
+      "blurb": "Increases pickup range by .5 studs. (Max 1.5 studs)",
+      "minLevel": 15,
+      "maxStack": 3,
+      "prices": {
+        "normal": 1500,
+        "stacks": [
+          1500,
+          2100,
+          2700
+        ]
+      },
+      "hazard": null
+    },
+    {
+      "id": "MatrixTetrahedron",
+      "name": "Matrix Tetrahedron",
+      "blurb": "Instant Acceleration. Completely Removes the slippery/icey movement.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "prices": {
+        "normal": 2500,
+        "casual": 1500
+      },
+      "hazard": null
+    },
+    {
+      "id": "Shield",
+      "name": "Shield",
+      "blurb": "Allows you to take an extra hit. Doesn't protect you from the Void.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "prices": {
+        "normal": 4000,
+        "casual": 2000,
+        "solo": 1000
+      },
+      "hazard": null
+    },
+    {
+      "id": "SportShoes",
+      "name": "Sport Shoes",
+      "blurb": "+40% Movement speed.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "prices": {
+        "normal": 1350,
+        "casual": 1000
+      },
+      "hazard": null
+    },
+    {
+      "id": "RealWings",
+      "name": "Real Wings",
+      "blurb": "Don't get too close to the sun.",
+      "minLevel": 20,
+      "maxStack": 1,
+      "prices": {
+        "normal": 0
+      },
+      "hazard": null
+    },
+    {
+      "id": "LastManStanding",
+      "name": "Last Robloxian Standing",
+      "blurb": "Gain a movement speed boost, 4 seconds of invincibility, and a shield when you are the last one alive.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "prices": {
+        "normal": 300
+      },
+      "hazard": null
+    },
+    {
+      "id": "Adrenaline",
+      "name": "Adrenaline",
+      "blurb": "+20% Movement speed.",
+      "minLevel": 3,
+      "maxStack": 1,
+      "prices": {
+        "normal": 50
+      },
+      "hazard": null
+    },
+    {
+      "id": "MiniatureHourglass",
+      "name": "Miniature Hourglass",
+      "blurb": "Powered dives pickup range is multiplied by 1.25x.",
+      "minLevel": 20,
+      "maxStack": 1,
+      "prices": {
+        "normal": 3000,
+        "casual": 1500
+      },
+      "hazard": null
+    },
+    {
+      "id": "PanicNecklace",
+      "name": "Panic Necklace",
+      "blurb": "When your last shield breaks, gain debuff immunity, movement speed and +2 pickup range for 40 seconds.",
+      "minLevel": 18,
+      "maxStack": 1,
+      "prices": {
+        "normal": 3000,
+        "casual": 1500
+      },
+      "hazard": null
+    },
+    {
+      "id": "RadarInstruments",
+      "name": "Radar Module: Instruments",
+      "blurb": "Marks the location of Cadence's instruments every 12 seconds. Gives you an arrow which points towards instruments.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "prices": {
+        "normal": 1000
+      },
+      "hazard": null
+    },
+    {
+      "id": "GiftIdol",
+      "name": "Gift Idol",
+      "blurb": "Collecting gifts has a +1% chance to collect nearby gifts. (Max 5%)",
+      "minLevel": 20,
+      "maxStack": 5,
+      "prices": {
+        "normal": 4000,
+        "stacks": [
+          4000,
+          8000,
+          12000,
+          16000,
+          20000
+        ]
+      },
+      "hazard": null
+    },
+    {
+      "id": "AltarOfVoid",
+      "name": "Drowned \u00c6gis",
+      "blurb": "Altar of Protection also gives a one time Void shield that teleports you out of the Void.",
+      "minLevel": 20,
+      "maxStack": 1,
+      "prices": {
+        "normal": 6000,
+        "casual": 4000
+      },
+      "hazard": null
+    },
+    {
+      "id": "RealWings",
+      "name": "Blossom",
+      "blurb": "<span style='font-size:1.8rem; color:#d05e8b; font-family:AccanthisADFStd-Regular;'>TO MAKE THINGS EVEN.</span>",
+      "minLevel": 40,
+      "maxStack": 1,
+      "prices": {
+        "normal": 0
+      },
+      "hazard": null
+    }
+  ],
+  "curses": [
+    {
+      "id": "BladeCarousel",
+      "name": "Blade Carousel",
+      "blurb": "Voidbreaker's swords now spin around you.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "SavoryRing",
+      "name": "Savory Ring",
+      "blurb": "+0.15x Golden Gift yield, spawns random enemies during collapse.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "BeaconMirage",
+      "name": "Beacon Mirage",
+      "blurb": "The beacon spawns at a random position. When the beacon opens, spawns fake beacons around the level which inflict insanity if touched.",
+      "minLevel": 25,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "BiggerTripmine",
+      "name": "Bigger Tripmines",
+      "blurb": "<span style='font-size:1.5rem;'>duh???</span>",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": "tripmine"
+    },
+    {
+      "id": "InfectedJumpPads",
+      "name": "Blighted Jump Pads",
+      "blurb": "Flesh can infect Jump Pads and Grapple Points.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Delusion",
+      "name": "Delusion",
+      "blurb": "Temporary enemies don't show up anymore?",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "ForceChance",
+      "name": "Jackpot",
+      "blurb": "At the start of a level, roll an Altar of Chance. Only rolls one effect with Tweaked Odds.",
+      "minLevel": 10,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "HighRoller",
+      "name": "High Roller",
+      "blurb": "<b>Strengthens</b> Altar of Chance's outcomes.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Lap2",
+      "name": "LAP 2",
+      "blurb": "+0.25x Golden Gift yield, decreases collapse speed, beacon requires 40% of total Golden Gifts to be collected. Some multipliers are nerfed.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "MoreTripmines",
+      "name": "More Tripmines",
+      "blurb": "Double Tripmines!",
+      "minLevel": 5,
+      "maxStack": 2,
+      "hazard": "tripmine"
+    },
+    {
+      "id": "MoreStairs",
+      "name": "Stairs... Stairs...",
+      "blurb": "Even more stairs spawn in and something wicked happens.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "TweakedOdds",
+      "name": "Tweaked Odds",
+      "blurb": "Altar of Chance now will always grant a positive and negative effect. Nerfs and removes certain positive effects.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "FakeCount",
+      "name": "Fake Count",
+      "blurb": "Is anyone keeping track?",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "FasterLevelDestroy",
+      "name": "Fragile Gifts",
+      "blurb": "+0.75x Golden Gift yield, increases collapse speed.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Nothing",
+      "name": "Nothing?",
+      "blurb": "Shops are +15% cheaper, No Downsides!",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Barotrauma",
+      "name": "Barotrauma",
+      "blurb": "Increases Seamine size by 20% and increases the explosion knockback.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "UnderwaterMinefield",
+      "name": "Minefield",
+      "blurb": "More Seamines.",
+      "minLevel": 15,
+      "maxStack": 2,
+      "hazard": "tripmine"
+    },
+    {
+      "id": "MartSlide",
+      "name": "Mart Slide",
+      "blurb": "Mart no longer kills on contact. Mart builds up immense momentum, pushing unsuspecting players that get in the way.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "ProblemChild",
+      "name": "Problem Child",
+      "blurb": "Baby will attempt to feint its dash, cued by a laugh.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "ICBMBig",
+      "name": "Bigger Blast",
+      "blurb": "Higher powered explosives.",
+      "minLevel": 5,
+      "maxStack": 2,
+      "hazard": null
+    },
+    {
+      "id": "RandomHusk",
+      "name": "Random Husk",
+      "blurb": "Makes the distance between Husks random.",
+      "minLevel": 15,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "TrainWalker",
+      "name": "Husk Express",
+      "blurb": "You can no longer go between Husks.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Springloaded",
+      "name": "Springloaded",
+      "blurb": "Springer leaves a shockwave when it jumps, the landing shockwave is also much larger.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "OvertunedSpringer",
+      "name": "Resonating Shockwaves",
+      "blurb": "Springer shockwaves inflict overtuned; overtuned players die upon ringing Bell. Shockwaves also inflict other status effects of a direct ring.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "FleshHighReach",
+      "name": "Bloodier Meat",
+      "blurb": "Flesh infects tiles from much farther.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "NilMirage",
+      "name": "[CONTENT REMOVED]",
+      "blurb": "<0> ? ? ?",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "NilChase",
+      "name": "[REDACTED]",
+      "blurb": "<0> --> ... <0> --> ... <0> !!!",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "NilChase",
+      "name": "Cognitive Dissonance",
+      "blurb": "NIL will begin a chase on its fourth attack. Spawns fake copies of itself, which inflict insanity.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Shotgun",
+      "name": "Shotgun",
+      "blurb": "Guardian will fire a spread of bullets rather than a volley.",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Camouflage",
+      "name": "Camouflage",
+      "blurb": "Guardian turns invisible whilst moving, and can no longer be tracked. Increases projectile speed.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "BlueCheese",
+      "name": "Cheeseware",
+      "blurb": "Kookoo will activate Doombringer.",
+      "minLevel": 10,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Malware",
+      "name": "Idiotware",
+      "blurb": "If Kookoo appears as a smiley, don't use your ability.",
+      "minLevel": 10,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "CrayonEnemies",
+      "name": "Crayonify",
+      "blurb": "Enemies will be masked by a crayon doodle.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "MartTransform",
+      "name": "Mart Infection",
+      "blurb": "A Mart spawns| whenever a player dies.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "TripleHusk",
+      "name": "Conga Line",
+      "blurb": "Triples Husks.",
+      "minLevel": 8,
+      "maxStack": 1,
+      "hazard": null
+    },
+    {
+      "id": "Nearsightedness",
+      "name": "Nearsightedness",
+      "blurb": "I can't see without my glasses!",
+      "minLevel": 5,
+      "maxStack": 1,
+      "hazard": null
+    }
+  ],
+  "greaterCurses": [
+    {
+      "id": "TrapCard",
+      "name": "Trap Card",
+      "blurb": "At the start of the level, 3 random enemies have their permanent stacks multiplied by 1.5x for the level. Gain 3 Randoms when picked.",
+      "minLevel": 15
+    },
+    {
+      "id": "Run",
+      "name": "Run",
+      "blurb": "<b>Seamines</b> chase you after activating them.",
+      "minLevel": 10
+    },
+    {
+      "id": "WaterPlanet",
+      "name": "Water Planet",
+      "blurb": "The Waterimp Grows.",
+      "minLevel": -1
+    },
+    {
+      "id": "OneLessChoice",
+      "name": "One Less Choice",
+      "blurb": "There's one less enemy and curse in the selections.",
+      "minLevel": 10
+    },
+    {
+      "id": "InverseDestruction",
+      "name": "Inverse Destruction",
+      "blurb": "Levels get destroyed from the inside out.",
+      "minLevel": 15
+    },
+    {
+      "id": "VoidImplosions",
+      "name": "Void Implosions",
+      "blurb": "After 90% of the gifts are collected, Void Implosions will start spawning. Bypasses shield.",
+      "minLevel": 10
+    },
+    {
+      "id": "Sorrow",
+      "name": "Sorrow",
+      "blurb": "When the rain starts, get above something, those in the air will quickly melt away.",
+      "minLevel": 10
+    },
+    {
+      "id": "Doombringer",
+      "name": "Doombringer",
+      "blurb": "It will scream, shut it up by touching a Jumppad.",
+      "minLevel": 10
+    },
+    {
+      "id": "Tantrum",
+      "name": "Tantrum",
+      "blurb": "Baby will enrage if they lose too much distance on their target.",
+      "minLevel": 10
+    },
+    {
+      "id": "FragileTiles",
+      "name": "Hollow Tiles",
+      "blurb": "ICBM explosions damage tiles, eventually breaking them for a few seconds. ICBMs take longer.",
+      "minLevel": 15
+    },
+    {
+      "id": "SkinwalkerDestroyer",
+      "name": "Destroyer",
+      "blurb": "IT CAN FIRE LASERS?????",
+      "minLevel": 20
+    },
+    {
+      "id": "FleshNoDespawn",
+      "name": "Mass Infection",
+      "blurb": "Infected tiles take A LOT longer to cleanse, debuff lasts longer.",
+      "minLevel": 10
+    },
+    {
+      "id": "VoidbreakerRapidFire",
+      "name": "Ballet of Blades",
+      "blurb": "Voidbreaker now summons multiple volleys of swords around you before striking, striking in the order summoned. Volleys are summoned with an additional sword. The swords launch at an extreme rate. Increases the cooldown.",
+      "minLevel": 10
+    },
+    {
+      "id": "VoidbreakerSlowFire",
+      "name": "Blade Bombardment",
+      "blurb": "Voidbreaker now fires 2 additional swords at once, the swords themselves are faster, causing swords from behind to hit, but summoning is much slower. Increases the cooldown.",
+      "minLevel": 10
+    },
+    {
+      "id": "VBOperator",
+      "name": "Malfunction",
+      "blurb": "Operator becomes Voidbound. Now attacks 3 times, <u>stay still and don't use abilities</u> once its eye starts glowing to survive.",
+      "minLevel": 10
+    },
+    {
+      "id": "Rebirth",
+      "name": "Rebirth",
+      "blurb": "All babies will turn into Voidbound Babies.",
+      "minLevel": 10
+    },
+    {
+      "id": "TelefragNoSound",
+      "name": "Muted",
+      "blurb": "Removes Telefragger's indicator.",
+      "minLevel": 1
+    },
+    {
+      "id": "Oblivion",
+      "name": "Oblivion",
+      "blurb": "When the convergence starts, <u>stay above something</u>, those without cover beneath them will quickly be obliterated.",
+      "minLevel": 10
+    },
+    {
+      "id": "Razorbloom",
+      "name": "Razorbloom",
+      "blurb": "Razorbloom will land on your head, <u>get rid of it by touching a Jump Pad</u>.",
+      "minLevel": 10
+    },
+    {
+      "id": "Googolpede",
+      "name": "Googolpede",
+      "blurb": "It's a new type of Husk that has one googol legs.",
+      "minLevel": 1
+    },
+    {
+      "id": "FlipFlop",
+      "name": "Flip Switch",
+      "blurb": "Every few tiles turn green or {{Highlight|pi|pink. <u>Jump to switch</u> which ones are enabled.",
+      "minLevel": 1
+    },
+    {
+      "id": "DontTouchMe",
+      "name": "Don't Touch Me",
+      "blurb": "Don't ring Bell..",
+      "minLevel": 1
+    },
+    {
+      "id": "GoldenTripmines",
+      "name": "Golden Coat",
+      "blurb": "hello golden tripmines spawn at level 30 now but i'm keeping this incase it's reverted",
+      "minLevel": -1
+    },
+    {
+      "id": "RealisticOblivion",
+      "name": "Realistic Oblivion",
+      "blurb": "Oblivion now comes from above.",
+      "minLevel": -1
+    }
+  ],
+  "enemies": [
+    {
+      "id": "Baby",
+      "name": "Baby",
+      "blurb": "Dashes in a straight line towards you.",
+      "minLevel": 1,
+      "maxStack": 2
+    },
+    {
+      "id": "Bell",
+      "name": "Bell",
+      "blurb": "A mostly harmless bell; rings on contact and cleanses flesh.",
+      "minLevel": 1,
+      "maxStack": 1
+    },
+    {
+      "id": "Cadence",
+      "name": "Cadence",
+      "blurb": "Collect the instruments, keep it at bay.",
+      "minLevel": 15,
+      "maxStack": 1
+    },
+    {
+      "id": "Catalyst",
+      "name": "Catalyst",
+      "blurb": "\u05dc\u05de\u05d4 \u05dc\u05d1\u05d6\u05d1\u05d6 \u05d0\u05ea \u05db\u05dc \u05d4\u05d6\u05de\u05df \u05d4\u05d6\u05d4 \u05d1\u05d0\u05d5\u05e8? \u05ea\u05d4\u05d9\u05d4 \u05d0\u05d9\u05ea\u05d9 \u05d1\u05d7\u05d5\u05e9\u05da.",
+      "minLevel": 100,
+      "maxStack": 1
+    },
+    {
+      "id": "Dozer",
+      "name": "Dozer",
+      "blurb": "Let go of all keys and abilities before its eyes open: the earlier you stop, the earlier it triggers.",
+      "minLevel": 5,
+      "maxStack": 1
+    },
+    {
+      "id": "Flesh",
+      "name": "Flesh",
+      "blurb": "Infects nearby tiles, hinders ability usage for a short duration.",
+      "minLevel": 5,
+      "maxStack": 2
+    },
+    {
+      "id": "Guardian",
+      "name": "Guardian",
+      "blurb": "Fires a volley of bullets.",
+      "minLevel": 8,
+      "maxStack": 1
+    },
+    {
+      "id": "Husk",
+      "name": "Husk",
+      "blurb": "Mimics your every movement.",
+      "minLevel": 1,
+      "maxStack": 2
+    },
+    {
+      "id": "ICBM",
+      "name": "ICBM",
+      "blurb": "Highly explosive, stay out of the blast.",
+      "minLevel": 1,
+      "maxStack": 2
+    },
+    {
+      "id": "Kolona",
+      "name": "Kol\u00f3na",
+      "blurb": "<u>Use your ability</u> right after it hits the number that was shown at the start.",
+      "minLevel": 10,
+      "maxStack": 1
+    },
+    {
+      "id": "KooKoo",
+      "name": "Kookoo",
+      "blurb": "Use your ability right after it hits the number that was shown at the start.",
+      "minLevel": 10,
+      "maxStack": 1
+    },
+    {
+      "id": "Mart",
+      "name": "Mart",
+      "blurb": "I am Mart. The waterimp!",
+      "minLevel": 1,
+      "maxStack": 1
+    },
+    {
+      "id": "nilEnemy",
+      "name": "NIL",
+      "blurb": "&lt;0&gt;",
+      "minLevel": 5,
+      "maxStack": 1
+    },
+    {
+      "id": "Operator",
+      "name": "Operator",
+      "blurb": "Stand still briefly, before it wakes.",
+      "minLevel": 5,
+      "maxStack": 1
+    },
+    {
+      "id": "Ponderer",
+      "name": "Ponderer",
+      "blurb": "An old friend?",
+      "minLevel": 12,
+      "maxStack": 1
+    },
+    {
+      "id": "Springer",
+      "name": "Springer",
+      "blurb": "Jumps around the map, creating shockwaves that fling you.",
+      "minLevel": 1,
+      "maxStack": 2
+    },
+    {
+      "id": "Telefragger",
+      "name": "Telefragger",
+      "blurb": "Teleports in front of you.",
+      "minLevel": 8,
+      "maxStack": 2
+    },
+    {
+      "id": "ShadowBaby",
+      "name": "Voidbound Baby",
+      "blurb": "Much quicker dash. Much deadlier.",
+      "minLevel": 10,
+      "maxStack": 2
+    },
+    {
+      "id": "ShadowGuardian",
+      "name": "Voidbound Guardian",
+      "blurb": "Bullets are much larger, and leave behind beams.",
+      "minLevel": 20,
+      "maxStack": 1
+    },
+    {
+      "id": "Voidbreaker",
+      "name": "Voidbreaker",
+      "blurb": "Materializes swords around you, firing them shortly after.",
+      "minLevel": 15,
+      "maxStack": 2
+    },
+    {
+      "id": "Scrapmaw",
+      "name": "Scrapmaw",
+      "blurb": "Blitzes toward the player, shooting beams.",
+      "minLevel": 20,
+      "maxStack": 1
+    },
+    {
+      "id": "Sigil",
+      "name": "Sigil",
+      "blurb": "Fires a tracking and long lasting beam.",
+      "minLevel": 20,
+      "maxStack": 1
+    }
+  ]
+}

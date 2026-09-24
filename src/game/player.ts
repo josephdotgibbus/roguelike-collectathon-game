@@ -54,6 +54,18 @@ export class Player {
     return this.locomotion.body;
   }
 
+  respawn(spawn: { x: number; y: number; z: number }): void {
+    const body = this.locomotion.body;
+    body.x = spawn.x;
+    body.y = spawn.y;
+    body.z = spawn.z;
+    body.vx = 0;
+    body.vy = 0;
+    body.vz = 0;
+    body.grounded = true;
+    this.respawnBlink = 0.45;
+  }
+
   update(
     dt: number,
     solids: Solid[],
@@ -69,16 +81,7 @@ export class Player {
     tick(this.locomotion, solids, { wishX, wishZ, jumpPressed, jumpHeld, dt });
     const body = this.locomotion.body;
 
-    if (body.y < -12) {
-      body.x = spawn.x;
-      body.y = spawn.y;
-      body.z = spawn.z;
-      body.vx = 0;
-      body.vy = 0;
-      body.vz = 0;
-      body.grounded = true;
-      this.respawnBlink = 0.45;
-    }
+    if (body.y < -12) this.respawn(spawn);
 
     if (!before && body.grounded) {
       this.squash = 0.72;
