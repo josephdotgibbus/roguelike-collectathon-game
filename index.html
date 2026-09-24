@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roguelike Collectathon</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <h1>Roguelike&nbsp;Collectathon</h1>
+        <p class="subtitle">Collect every gem, then find the stairs down. Don't die.</p>
+      </header>
+
+      <div class="stage">
+        <canvas id="game" width="704" height="704" aria-label="game board"></canvas>
+        <aside class="hud">
+          <div class="stat" id="stat-floor">Floor: 1</div>
+          <div class="stat" id="stat-hp">HP: 10 / 10</div>
+          <div class="stat" id="stat-gems">Gems: 0 / 0</div>
+          <div class="stat" id="stat-score">Score: 0</div>
+          <div class="status" id="status-line">Explore!</div>
+          <button id="restart" type="button">New Game (R)</button>
+          <div class="legend">
+            <div><span class="swatch player"></span> You</div>
+            <div><span class="swatch gem"></span> Gem</div>
+            <div><span class="swatch enemy"></span> Enemy</div>
+            <div><span class="swatch stairs"></span> Stairs (when gems cleared)</div>
+          </div>
+          <div class="help">
+            Move: <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrow keys.
+            Walk into enemies to attack. Walk over gems to collect.
+          </div>
+        </aside>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

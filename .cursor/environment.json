@@ -1,0 +1,17 @@
+{
+  "name": "roguelike-collectathon-game",
+  "install": "npm ci",
+  "chromeExecutablePath": "/usr/local/bin/google-chrome",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "npm run dev"
+    }
+  ],
+  "ports": [
+    {
+      "name": "vite-dev",
+      "port": 5173
+    }
+  ]
+}
