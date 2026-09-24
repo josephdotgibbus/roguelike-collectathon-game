@@ -88,6 +88,7 @@ export class Game {
   private beaconArmed = false;
   private collapseTime = 0;
   private goldSpots: { x: number; y: number; z: number }[] = [];
+  private hudKey = "";
 
   constructor(canvas: HTMLCanvasElement, overlay: HTMLElement, hud: HTMLElement) {
     this.overlay = overlay;
@@ -391,7 +392,7 @@ export class Game {
       <section class="panel">
         <p class="kicker">Nullscape-style run</p>
         <h1>Choose a difficulty</h1>
-        <p class="lede">Collect every black gift. That starts the collapse, turns them into Golden Gifts, and opens the beacon. Step back onto the gold platform to leave.</p>
+        <p class="lede">Collect every black gift. That starts the collapse and turns them into Golden Gifts. Leave by standing in the ring at the middle of the gold platform. You can walk around the ring to cross the platform.</p>
         <div class="choices">
           <button data-action="start" data-id="casual">
             <strong>Casual</strong>
@@ -451,29 +452,39 @@ export class Game {
   }
 
   private renderHud(run: Run): void {
-    const phase = this.collapse ? "Collapse — return to the beacon" : `Gifts ${this.giftsLeft}`;
+    const phase = this.collapse ? "Collapse — stand in the ring" : `Gifts ${this.giftsLeft}`;
     const owned = summarize(run);
-    const guide = this.guideTarget();
-    let arrow = "";
-    if (guide && this.right.lengthSq() > 0.5) {
-      const feet = this.player.position;
-      const dx = guide.x - feet.x;
-      const dz = guide.z - feet.z;
-      const localX = dx * this.right.x + dz * this.right.z;
-      const localY = dx * this.forward.x + dz * this.forward.z;
-      const angle = Math.atan2(localX, localY);
-      const meters = Math.hypot(dx, dz).toFixed(0);
-      arrow = `<div class="gift-arrow" style="transform:rotate(${angle}rad)">↑</div><span>${meters}m to ${guide.label}</span>`;
+    const key = `${run.level}|${run.difficulty}|${phase}|${run.gold}|${owned}`;
+    if (key !== this.hudKey) {
+      this.hudKey = key;
+      this.hud.innerHTML = `
+        <div class="hud-card">
+          <strong>Level ${run.level}</strong>
+          <span>${run.difficulty}</span>
+          <span>${phase}</span>
+          <div class="gift-arrow" hidden>↑</div>
+          <span class="gift-distance"></span>
+          <span>${run.gold} golden gifts</span>
+        </div>
+        <p class="hud-owned">${owned}</p>`;
     }
-    this.hud.innerHTML = `
-      <div class="hud-card">
-        <strong>Level ${run.level}</strong>
-        <span>${run.difficulty}</span>
-        <span>${phase}</span>
-        ${arrow}
-        <span>${run.gold} golden gifts</span>
-      </div>
-      <p class="hud-owned">${owned}</p>`;
+    const guide = this.guideTarget();
+    const arrow = this.hud.querySelector<HTMLElement>(".gift-arrow");
+    const distance = this.hud.querySelector<HTMLElement>(".gift-distance");
+    if (!arrow || !distance) return;
+    if (!guide || this.right.lengthSq() <= 0.5) {
+      arrow.hidden = true;
+      distance.textContent = "";
+      return;
+    }
+    const feet = this.player.position;
+    const dx = guide.x - feet.x;
+    const dz = guide.z - feet.z;
+    const localX = dx * this.right.x + dz * this.right.z;
+    const localY = dx * this.forward.x + dz * this.forward.z;
+    arrow.hidden = false;
+    arrow.style.transform = `rotate(${Math.atan2(localX, localY)}rad)`;
+    distance.textContent = `${Math.hypot(dx, dz).toFixed(0)}m to ${guide.label}`;
   }
 }
 

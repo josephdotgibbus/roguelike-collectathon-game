@@ -18,6 +18,13 @@ export type Tile = {
 
 export type PickupKind = "gift" | "tripmine" | "seamine";
 
+/** Radius of the exit ring in the middle of the beacon platform. */
+export const BEACON_WIN_RADIUS = 1.15;
+
+export function inBeaconRing(x: number, z: number, radius = BEACON_WIN_RADIUS): boolean {
+  return x * x + z * z <= radius * radius;
+}
+
 export type Pickup = {
   id: number;
   tileId: number;
@@ -146,7 +153,9 @@ export function generateLevel(level: number, difficulty: Difficulty, rng: () => 
 
   for (const tile of tiles) {
     const cap = tile.kind === "beacon" ? Math.min(3, Math.max(1, Math.ceil(budget / 12))) : 6;
-    const spots = giftSpots(tile, cap, rng);
+    const spots = giftSpots(tile, cap, rng).filter(
+      (spot) => tile.kind !== "beacon" || !inBeaconRing(spot.x, spot.z, BEACON_WIN_RADIUS + 0.7),
+    );
     for (const spot of spots) {
       if (giftCount >= budget) break;
       const mine = minesAt !== null && level >= minesAt && rng() < 0.14;
@@ -158,7 +167,7 @@ export function generateLevel(level: number, difficulty: Difficulty, rng: () => 
     }
   }
 
-  return { level, tiles, pickups, spawn: { x: 0, y: 0, z: 0 }, giftCount };
+  return { level, tiles, pickups, spawn: { x: 0, y: 0, z: 3.3 }, giftCount };
 }
 
 export function tileSolid(tile: Tile): Solid {

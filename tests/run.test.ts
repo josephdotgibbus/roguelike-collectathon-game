@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateLevel, giftBudget, iceLevel, tripmineLevel, type Tile } from "../src/game/generate";
+import { BEACON_WIN_RADIUS, generateLevel, giftBudget, iceLevel, inBeaconRing, tripmineLevel, type Tile } from "../src/game/generate";
 import {
   curseShopLevel,
   greaterCurseLevel,
@@ -74,6 +74,12 @@ describe("level generation", () => {
     expect(early.tiles.some((tile) => tile.kind === "ice")).toBe(false);
     expect(early.pickups.some((pickup) => pickup.kind !== "gift")).toBe(false);
     expect(walkable(early.tiles)).toBe(true);
+    expect(inBeaconRing(early.spawn.x, early.spawn.z)).toBe(false);
+    const beacon = early.tiles[0];
+    expect(Math.abs(early.spawn.z)).toBeLessThan(beacon.d / 2 - 0.4);
+    for (const pickup of early.pickups) {
+      if (pickup.tileId === 0) expect(inBeaconRing(pickup.x, pickup.z, BEACON_WIN_RADIUS + 0.7)).toBe(false);
+    }
 
     const casual = generateLevel(20, "casual", mulberry32(9));
     expect(casual.pickups.some((pickup) => pickup.kind === "tripmine")).toBe(false);
