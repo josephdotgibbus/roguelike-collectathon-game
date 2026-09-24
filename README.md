@@ -47,18 +47,13 @@ tests/                # Movement and sprite checks
 
 ## Play it online (GitHub Pages)
 
-This repo auto-deploys to GitHub Pages on every push to `main` via
-`.github/workflows/deploy-pages.yml` (it type-checks, tests, builds, and publishes
-`dist/`). The build uses a relative base path, so it works from the project
-subpath GitHub Pages serves.
-
-One-time setup: in the repo, go to **Settings → Pages → Build and deployment →
-Source** and choose **GitHub Actions**. After the next push to `main`, the game
-is live at:
-
-```
 https://josephdotgibbus.github.io/roguelike-collectathon-game/
-```
+
+Pages publishes the `main` branch root. That root is the production build
+(`index.html`, `assets/`, and `.nojekyll`), with relative paths so the 3D game
+loads from the project subpath. `npm run dev` still uses `dev.html`.
+
+Pushes to `main` rebuild and commit that static root.
 
 ## Cloud Agent environment
 
